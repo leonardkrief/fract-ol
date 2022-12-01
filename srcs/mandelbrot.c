@@ -6,21 +6,25 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 23:00:05 by lkrief            #+#    #+#             */
-/*   Updated: 2022/11/30 23:00:07 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/01 14:15:56 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/fract-ol.h"
+#include "../include/fractol.h"
 
-int	mandelbrot_escape_time(t_point c, int N_max)
+int	mandelbrot_escape_value(t_point c, int N_max)
 {
 	int		n;
+	double	q;
 	t_point	z;
 	t_point	tmp;
 
 	n = 0;
-	z.re = 0;
-	z.im = 0;
+	set_point(&z, 0, 0);
+	q = pow(c.re - 0.25, 2) + pow(c.im, 2);
+	if (q * (q + c.re - 0.25) < pow(c.im, 2) * 0.25
+		|| pow(z.re, 2) + pow(z.im, 2) + 2 * z.re + 1 < 0.0625)
+		return (N_max);
 	while (pow(z.re, 2) + pow(z.im, 2) <= 4 && (++n < N_max))
 	{
 		tmp.re = z.re;
@@ -31,25 +35,35 @@ int	mandelbrot_escape_time(t_point c, int N_max)
 	return (n);
 }
 
-void	mandelbrot_to_win(t_window *win, t_image *img, int N_max)
+void	set_mandelbrot_ev(t_image *img, int N_max)
 {
-	int		i;
-	int		j;
-	int		col;
+	double		x;
+	double		y;
 	t_point	c;
 
-	i = -1;
-	while (++i < img->wid)
+	x = -1;
+	while (++x < img->wid)
 	{
-		j = -1;
-		while (++j < img->len)
+		y = img->hgt;
+		while (--y > -1)
 		{
-			c.re = (-1 + (double)i * 2 / img->wid) * img->zoom + img->center.re;
-			c.im = (-1 + (double)j * 2 / img->len) * img->zoom - img->center.im;
-			col = color(mandelbrot_escape_time(c, N_max), N_max);
-			my_mlx_pixel_put(img, i, j, col);
+			c.re = (img->min.re + x * (img->max.re - img->min.re) / img->wid);
+			c.im = (img->min.im + y * (img->max.im - img->min.im) / img->hgt);
+			my_mlx_pixel_put(img, x, y, color(mandelbrot_escape_value(c, N_max), N_max));
 		}
 	}
-	mlx_put_image_to_window(win->mlx, win->mlx_win, img->img, 0, 0);
-	mlx_loop(win->mlx);
+}
+
+void	mandelbrot_to_img(t_image *img, int N_max)
+{
+	double		x;
+	double		y;
+
+	x = -1;
+	while (++x < img->wid)
+	{
+		y = img->hgt;
+		while (--y > -1)
+			my_mlx_pixel_put(img, x, y, color(img->esc_val[(int)y * img->wid + (int)x], N_max));
+	}
 }

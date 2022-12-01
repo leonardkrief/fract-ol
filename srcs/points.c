@@ -6,22 +6,16 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:10:13 by lkrief            #+#    #+#             */
-/*   Updated: 2022/11/30 16:12:42 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/01 12:16:39 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/fract-ol.h"
+#include "../include/fractol.h"
 
-t_point	*init_point(double re, double im)
+void	set_point(t_point *z, double re, double im)
 {
-	t_point	*z;
-
-	z = malloc(sizeof(*z));
-	if (!z)
-		return (NULL);
 	z->re = re;
 	z->im = im;
-	return (z);
 }
 
 double	module_point(t_point z)

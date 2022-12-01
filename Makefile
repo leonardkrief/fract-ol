@@ -2,7 +2,7 @@ SRCS		=	srcs/colors.c \
 				srcs/init.c \
 				srcs/main.c \
 				srcs/mandelbrot.c \
-				srcs/pixels.c \
+				srcs/display.c \
 				srcs/points.c \
 
 OBJS		= $(SRCS:.c=.o)

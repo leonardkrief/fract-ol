@@ -6,11 +6,11 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 22:58:58 by lkrief            #+#    #+#             */
-/*   Updated: 2022/11/30 22:59:06 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/01 10:07:26 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/fract-ol.h"
+#include "../include/fractol.h"
 
 int	add_shade(double distance, t_color color)
 {
