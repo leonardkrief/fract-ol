@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -27,6 +27,9 @@ int	main(void)
 	img = init_image(win, wid, len);
 	if (!img)
 		return(-1); // il faudra free le window
-	mandelbrot_to_win(win, img);
+	img->center.re = -1;
+	img->center.im = 0.25;
+	img->zoom = 0.1;
+	mandelbrot_to_win(win, img, 100);
 	return (0);
 }

@@ -1,4 +1,5 @@
-SRCS		=	srcs/init.c \
+SRCS		=	srcs/colors.c \
+				srcs/init.c \
 				srcs/main.c \
 				srcs/mandelbrot.c \
 				srcs/pixels.c \

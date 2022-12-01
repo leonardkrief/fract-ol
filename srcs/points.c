@@ -24,11 +24,9 @@ t_point	*init_point(double re, double im)
 	return (z);
 }
 
-double	module_point(t_point *z)
+double	module_point(t_point z)
 {
-	if (z == NULL)
-		return (-1);
-	return (sqrt(pow(z->re, 2) + pow(z->im, 2)));
+	return (sqrt(pow(z.re, 2) + pow(z.im, 2)));
 }
 
 void	exit_points(t_point *a, t_point *b)
