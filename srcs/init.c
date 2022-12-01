@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 22:59:13 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/01 12:55:25 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/01 14:25:33 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ t_image	*init_image(void *mlx, int wid, int hgt)
 		free(img);
 		return (NULL);
 	}
+	img->addr = mlx_get_data_addr(img->img, &(img->bits_per_pixel), \
+					&(img->line_length), &(img->endian));
+	img->wid = wid;
+	img->hgt = hgt;
 	img->esc_val = malloc(sizeof(*(img->esc_val)) * img->wid * img->hgt);
 	if (img->esc_val == NULL)
 	{
@@ -52,10 +56,6 @@ t_image	*init_image(void *mlx, int wid, int hgt)
 		free(img);
 		return (NULL);
 	}
-	img->addr = mlx_get_data_addr(img->img, &(img->bits_per_pixel), \
-					&(img->line_length), &(img->endian));
-	img->wid = wid;
-	img->hgt = hgt;
 	set_point(&(img->min), -2, -2);
 	set_point(&(img->max), 2, 2);
 	return (img);

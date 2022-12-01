@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:08:50 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/01 13:07:37 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/01 14:44:39 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ t_window	*init_window(void *mlx, int wid, int hgt);
 t_image		*init_image(void *mlx, int wid, int hgt);
 
 // mandelbrot.c
-int	mandelbrot_escape_value(t_point c, int N_max);
-void	set_mandelbrot_ev(t_image *img, int N_max);
+int	mandelbrot_ev(t_point c, int N_max, int n);
+void	set_mandelbrot_ev(t_image *img, int N_max, int *ev_tab, int bool);
 void	mandelbrot_to_img(t_image *img, int N_max);
 
 // display.c
