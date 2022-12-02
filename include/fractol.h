@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:08:50 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/01 14:44:39 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/02 01:39:38 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ typedef struct s_image {
 	t_point	max;
 }	t_image;
 
+typedef struct s_fractal {
+	int	N_max;
+	int (*get_ev)(t_point, int, int);
+}	t_fractal;
+
 // colors.c
 int	add_shade(double distance, t_color color);
 int	color(int escape_time, int N_max);
@@ -63,14 +68,15 @@ t_window	*init_window(void *mlx, int wid, int hgt);
 t_image		*init_image(void *mlx, int wid, int hgt);
 
 // mandelbrot.c
-int	mandelbrot_ev(t_point c, int N_max, int n);
-void	set_mandelbrot_ev(t_image *img, int N_max, int *ev_tab, int bool);
-void	mandelbrot_to_img(t_image *img, int N_max);
+int		mandelbrot(t_point c, int N_max, int n);
+void	set_fractal_ev(t_image *img, t_fractal fractal, int *ev_tab, int bool);
+void	fractal_to_img(t_image *img, t_fractal fractal);
 
 // display.c
 void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
-void	translate_img(t_image *img, t_point z);
+void	translate_img(t_image *img, t_point z, t_fractal fractal);
 void	zoom_img(t_image *img, t_point z, double t);
+void	put_grid(t_image *img, int colr);
 
 // points.c
 void	set_point(t_point *z, double re, double im);

@@ -17,7 +17,6 @@ LIBS		=	-L /usr/X11/lib -l mlx
 FRAMEWORKS	=	-framework OpenGL -framework AppKit
 RM			=	rm -rf
 
-
 ${FRACT-OL}:	${OBJS}
 			${CC} ${CFLAGS} ${OBJS} ${LIBS} ${FRAMEWORKS} -o ${FRACT-OL}
 
@@ -40,3 +39,4 @@ re:		fclean all
 -include ${DEPS}
 
 .PHONY: all clean fclean re
+.SILENT:

@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 05:12:05 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/01 14:52:06 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/02 02:43:01 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	main(void)
 	int			wid;
 	int			hgt;
 	void	*mlx;
-	int		N_max;
 
 		wid = 500;
 		hgt = 500;
@@ -32,21 +31,23 @@ int	main(void)
 		img = init_image(mlx, wid, hgt);
 		if (!img)
 			return(-1); // il faudra free le window
-		t_point z;
-		z.re = -0.95, z.im = 0.25;
-		zoom_img(img, z, 250);
-		N_max = 1000;
-		set_mandelbrot_ev(img, N_max, NULL, 0);
-		mandelbrot_to_img(img, N_max);
+		t_fractal fractal;
+		fractal.N_max = 250;
+		fractal.get_ev = *mandelbrot;
+		t_point z, a;
+		z.re = 1, z.im = -1;
+		a.re = 0, a.im = 0;
+		// zoom_img(img, z, 250);
+		set_fractal_ev(img, fractal, NULL, 0);
+		fractal_to_img(img, fractal);
+		put_grid(img, 0x000000ff);
 		mlx_put_image_to_window(mlx, win->mlx_win, img->img, 0, 0);
-		int x = -1, y = -1;
-		while (++x < img->wid)
-		{
-			y = img->hgt;
-			while (--y > -1)
-				printf("%x ", img->esc_val[y * img->wid + x]);
-			printf("\n");
-		}
+
+		translate_img(img, z, fractal);
+		fractal_to_img(img, fractal);
+		put_grid(img, 0xa0000000);
+		mlx_put_image_to_window(mlx, win->mlx_win, img->img, 0, 0);
+
 		mlx_loop(win->mlx);
 		return (0);
 }

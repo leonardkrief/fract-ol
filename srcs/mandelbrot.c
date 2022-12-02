@@ -6,13 +6,13 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 23:00:05 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/01 14:52:37 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/02 02:41:06 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
 
-int	mandelbrot_ev(t_point c, int N_max, int n)
+int	mandelbrot(t_point c, int N_max, int n)
 {
 	double	q;
 	t_point	z;
@@ -33,31 +33,31 @@ int	mandelbrot_ev(t_point c, int N_max, int n)
 	return (n);
 }
 
-void	set_mandelbrot_ev(t_image *img, int N_max, int *ev_tab, int bool)
+void	set_fractal_ev(t_image *img, t_fractal fractal, int *ev_tab, int bool)
 {
-	double		x;
-	double		y;
+	int		x;
+	int		y;
 	t_point	c;
 
 	x = -1;
 	while (++x < img->wid)
 	{
-		y = img->hgt;
-		while (--y > -1)
+		y = 0;
+		while (++y < img->hgt)
 		{
 			c.re = (img->min.re + x * (img->max.re - img->min.re) / img->wid);
-			c.im = (img->min.im + y * (img->max.im - img->min.im) / img->hgt);
+			c.im = (img->max.im - y * (img->max.im - img->min.im) / img->hgt);
 			if (bool)
-				img->esc_val[(int)y * img->wid + (int)x] = mandelbrot_ev(c, \
-					N_max, ev_tab[(int)y * img->wid + (int)x]);
+				img->esc_val[y * img->wid + x] = fractal.get_ev(c, \
+					fractal.N_max, ev_tab[y * img->wid + x]);
 			else
-				img->esc_val[(int)y * img->wid + (int)x] = mandelbrot_ev(c, \
-					N_max, 0);
+				img->esc_val[y * img->wid + x] = fractal.get_ev(c, \
+					fractal.N_max, 0);
 		}
 	}
 }
 
-void	mandelbrot_to_img(t_image *img, int N_max)
+void	fractal_to_img(t_image *img, t_fractal fractal)
 {
 	double		x;
 	double		y;
@@ -67,6 +67,7 @@ void	mandelbrot_to_img(t_image *img, int N_max)
 	{
 		y = img->hgt;
 		while (--y > -1)
-			my_mlx_pixel_put(img, x, y, color(img->esc_val[(int)y * img->wid + (int)x], N_max));
+			my_mlx_pixel_put(img, x, y, \
+				color(img->esc_val[(int)y * img->wid + (int)x], fractal.N_max));
 	}
 }
