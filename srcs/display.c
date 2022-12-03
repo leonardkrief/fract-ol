@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 22:59:52 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/03 00:12:34 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/03 06:49:23 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,10 @@ void	zoom_mouse(t_image *img, t_point mouse, double t)
 
 void	zoom_point(t_image *img, t_point z, double t)
 {
-	int	min_re;
-	int	min_im;
-	int	max_re;
-	int	max_im;
+	double	min_re;
+	double	min_im;
+	double	max_re;
+	double	max_im;
 
 	if (t == 0)
 		return ;

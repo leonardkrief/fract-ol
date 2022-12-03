@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 22:59:13 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/01 14:25:33 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/03 07:13:24 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_window	*init_window(void *mlx, int wid, int hgt)
 	if (!win)
 		return (NULL);
 	win->mlx = mlx;
-	win->mlx_win = mlx_new_window(win->mlx, wid, hgt, "fract-ol");
-	if (win->mlx_win == NULL)
+	win->win = mlx_new_window(win->mlx, wid, hgt, "fract-ol");
+	if (win->win == NULL)
 	{
 		free(win);
 		return (NULL);
@@ -56,7 +56,7 @@ t_image	*init_image(void *mlx, int wid, int hgt)
 		free(img);
 		return (NULL);
 	}
-	set_point(&(img->min), -2, -2);
-	set_point(&(img->max), 2, 2);
+	set_point(&(img->min), -2, -2 * hgt/wid);
+	set_point(&(img->max), 2, 2 * hgt/wid);
 	return (img);
 }

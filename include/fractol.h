@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:08:50 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/02 18:55:48 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/03 05:40:05 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 # include <string.h>
 # include <mlx.h>
 # include <math.h>
+
+# define MLX_SYNC_IMAGE_WRITABLE		1
+# define MLX_SYNC_WIN_FLUSH_CMD			2
+# define MLX_SYNC_WIN_CMD_COMPLETED		3
 
 typedef struct s_point
 {
@@ -35,7 +39,7 @@ typedef struct s_color
 
 typedef struct s_window {
 	void	*mlx;
-	void	*mlx_win;
+	void	*win;
 	int		hgt;
 	int		wid;
 }	t_window;
@@ -58,6 +62,13 @@ typedef struct s_fractal {
 	int	N_max;
 	int (*get_ev)(t_point, int, int);
 }	t_fractal;
+
+typedef struct s_vars {
+	void *mlx;
+	void *win;
+	t_image *img;
+	t_fractal fractal;
+}	t_vars;
 
 // colors.c
 int	add_shade(double distance, t_color color);
@@ -84,5 +95,6 @@ void	set_point(t_point *z, double re, double im);
 double	module_point(t_point z);
 void	exit_points(t_point *a, t_point *b);
 void			*free_points(t_point *a, t_point *b);
+
 
 #endif
