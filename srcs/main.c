@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 05:12:05 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/03 09:03:52 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/03 10:56:55 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,20 @@ int	handle_no_event(void)
 int	handle_key_input(int keysym, t_vars *vars)
 {
 	t_point	a;
+	double	d;
 	static int x;
 
+	d = (vars->img->max.re - vars->img->min.re) / 80;
 	set_point(&a, 0, 0);
-	if (keysym == 123) // LEFT
-		set_point(&a, -0.01, 0);
-	else if (keysym == 124) // RIGHT
-		set_point(&a, 0.01, 0);
-	else if (keysym == 125) // DOWN
-		set_point(&a, 0, -0.01);
-	else if (keysym == 126) // UP
-		set_point(&a, 0, 0.01);
+	if (keysym == 123)
+		set_point(&a, -d, 0);
+	else if (keysym == 124)
+		set_point(&a, d, 0);
+	else if (keysym == 125)
+		set_point(&a, 0, -d);
+	else if (keysym == 126)
+		set_point(&a, 0, d);
 	translate_img(vars->img, a, vars->fractal);
-	//set_fractal_ev(vars->img, vars->fractal, NULL, 0);
 	fractal_to_img(vars->img, vars->fractal);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img->img, 0, 0);
 
@@ -45,23 +46,23 @@ int	handle_key_input(int keysym, t_vars *vars)
 int	handle_mouse_input(int mousesym, int x, int y, t_vars *vars)
 {
 	t_point	a;
-	static int p;
+	t_point	max;
+	t_point	min;
+	double	zm;
 
-	++p;
-	//mlx_mouse_get_pos(vars->win, &x, &y);
-	if (x && y)
-		a.re = 0;
-	set_point(&a, -0.7497065, 0.0314565);
-	vars->fractal.N_max += 10;
-	zoom_point(vars->img, a, 1.1);
-	set_fractal_ev(vars->img, vars->fractal, NULL, 0);
-	fractal_to_img(vars->img, vars->fractal);
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->img->img, 0, 0);
-	//mlx_get_screen_size(vars->mlx, &(a.re), &(a.im));
-	fprintf(stderr, "(%d) synced (mouse = %d)\n", ++p, mousesym);
-	fprintf(stderr, "           %.2f\n    %.2f        %.2f\n           %.2f\n", vars->img->min.im, vars->img->min.re, vars->img->max.re, vars->img->max.im);
-	fprintf(stderr, "     N_max = %d, zoom = %.2f\n", vars->fractal.N_max, pow(1.1, p));
-	//fprintf(stderr, "screen size %.4f %.4f", a.re, a.im);
+	if (mousesym == 4 || mousesym == 5)
+	{
+		zm = (mousesym == 4) * 1 / 1.1 + (mousesym == 5) * 1.1;
+		max = vars->img->max;
+		min = vars->img->min;
+		set_point(&a, min.re + x * (max.re - min.re) / vars->img->wid, \
+			max.im - y * (max.im - min.im) / vars->img->hgt);
+		zoom_point(vars->img, a, zm);
+		set_fractal_ev(vars->img, vars->fractal, NULL, 0);
+		fractal_to_img(vars->img, vars->fractal);
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->img->img, 0, 0);
+	}
+	fprintf(stderr, "mouse = %d\n", mousesym);
 	return (0);
 }
 
@@ -77,18 +78,17 @@ int	main(void)
 	void	*mlx;
 
 //fractal init
-	fractal.N_max = 500;
+	fractal.N_max = 50;
 	fractal.get_ev = *mandelbrot;
 
 //mlx init
 	mlx = mlx_init();
 	if (mlx == NULL)
 		return (-1);
-	mlx_do_key_autorepeaton(mlx);
 
 //win init
-	wid = 1280;
-	hgt = 800;
+	wid = 500;
+	hgt = 500;
 	win = init_window(mlx, wid, hgt);
 	if (!win)
 		return (-1);

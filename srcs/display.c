@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 22:59:52 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/03 09:01:58 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/03 10:50:39 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,8 @@ void	zoom_point(t_image *img, t_point z, double t)
 	min_im = img->min.im;
 	max_re = img->max.re;
 	max_im = img->max.im;
-	img->min.re = z.re - (max_re - min_re) / (2 * t);
-	img->max.re = z.re + (max_re - min_re) / (2 * t);
-	img->min.im = z.im - (max_im - min_im) / (2 * t);
-	img->max.im = z.im + (max_im - min_im) / (2 * t);
+	img->min.re = ((t - 1) * z.re + min_re) / t;
+	img->max.re = ((t - 1) * z.re + max_re) / t;
+	img->min.im = ((t - 1) * z.im + min_im) / t;
+	img->max.im = ((t - 1) * z.im + max_im) / t;
 }
