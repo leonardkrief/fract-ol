@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:08:50 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/02 01:39:38 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/02 18:55:48 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	fractal_to_img(t_image *img, t_fractal fractal);
 // display.c
 void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
 void	translate_img(t_image *img, t_point z, t_fractal fractal);
-void	zoom_img(t_image *img, t_point z, double t);
+void	zoom_mouse(t_image *img, t_point mouse, double t);
+void	zoom_point(t_image *img, t_point z, double t);
 void	put_grid(t_image *img, int colr);
 
 // points.c

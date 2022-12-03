@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "libft_bonus.h": "c",
+        "ft_printf.h": "c",
+        "mlx.h": "c",
+        "string.h": "c",
+        "fractol.h": "c"
+    },
+    "42header.username": "lkrief",
+    "42header.email": "lkrief@student.42.fr",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": false,
+    "editor.renderWhitespace": "all",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+}

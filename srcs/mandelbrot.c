@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 23:00:05 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/02 02:41:06 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/02 23:38:03 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	set_fractal_ev(t_image *img, t_fractal fractal, int *ev_tab, int bool)
 	x = -1;
 	while (++x < img->wid)
 	{
-		y = 0;
+		y = -1;
 		while (++y < img->hgt)
 		{
 			c.re = (img->min.re + x * (img->max.re - img->min.re) / img->wid);

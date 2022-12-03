@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 05:12:05 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/02 02:43:01 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/03 00:19:07 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	main(void)
 	int			hgt;
 	void	*mlx;
 
-		wid = 500;
-		hgt = 500;
+		wid = 800;
+		hgt = 800;
 		mlx = mlx_init();
 		if (mlx == NULL)
 			return (-1);
@@ -32,20 +32,20 @@ int	main(void)
 		if (!img)
 			return(-1); // il faudra free le window
 		t_fractal fractal;
-		fractal.N_max = 250;
+		fractal.N_max = 100;
 		fractal.get_ev = *mandelbrot;
 		t_point z, a;
-		z.re = 1, z.im = -1;
-		a.re = 0, a.im = 0;
-		// zoom_img(img, z, 250);
+		z.re = 0.5, z.im = -0.5;
+		a.re = 1, a.im = 1;
+		zoom_point(img, z, 1);
 		set_fractal_ev(img, fractal, NULL, 0);
 		fractal_to_img(img, fractal);
-		put_grid(img, 0x000000ff);
+		//put_grid(img, 0x000000ff);
 		mlx_put_image_to_window(mlx, win->mlx_win, img->img, 0, 0);
 
-		translate_img(img, z, fractal);
+		translate_img(img, a, fractal);
 		fractal_to_img(img, fractal);
-		put_grid(img, 0xa0000000);
+		put_grid(img, 0x000ff000);
 		mlx_put_image_to_window(mlx, win->mlx_win, img->img, 0, 0);
 
 		mlx_loop(win->mlx);
