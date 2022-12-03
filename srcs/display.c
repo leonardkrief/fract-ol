@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 22:59:52 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/03 06:49:23 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/03 09:01:58 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,38 +33,48 @@ void	translate_img(t_image *img, t_point z, t_fractal fractal)
 	set_point(&(img->min), img->min.re + z.re, img->min.im + z.im);
 	set_point(&(img->max), img->max.re + z.re, img->max.im + z.im);
 	i = -1;
-	while (++i < img->wid)
+	while (++i < img->wid && ((z.re > 0 && z.im == 0) || (z.re == 0 && z.im < 0)))
 	{
 		j = -1;
 		while (++j < img->hgt)
 		{
 			c.re = (img->min.re + i * (img->max.re - img->min.re) / img->wid);
 			c.im = (img->max.im - j * (img->max.im - img->min.im) / img->hgt);
-			if (z.re >= 0 && z.im >= 0)
+			if (z.re > 0 && z.im == 0)
 			{
-				if (i < (img->wid - x) && j > y)
-					img->esc_val[j * img->wid + i] = img->esc_val[(j - y) * img->wid + (i + x)];
+				if (i < img->wid - x)
+					img->esc_val[j * img->wid + i] = img->esc_val[j * img->wid + (i + x)];
 				else
 					img->esc_val[j * img->wid + i] = fractal.get_ev(c, fractal.N_max, 0);
 			}
-			else if (z.re >= 0 && z.im < 0)
+			else if (z.re == 0 && z.im < 0)
 			{
-				if (i < (img->wid - x) && j < img->hgt - y)
-					img->esc_val[j * img->wid + i] = img->esc_val[(j + y) * img->wid + (i + x)];
+				if (j < img->hgt - y)
+					img->esc_val[j * img->wid + i] = img->esc_val[(j + y) * img->wid + i];
 				else
 					img->esc_val[j * img->wid + i] = fractal.get_ev(c, fractal.N_max, 0);
 			}
-			else if (z.re < 0 && z.im >= 0)
+		}
+	}
+	i = img->wid;
+	while (--i >= 0 && ((z.re < 0 && z.im == 0) || (z.re == 0 && z.im > 0)))
+	{
+		j = img->hgt;
+		while (--j >= 0)
+		{
+			c.re = (img->min.re + i * (img->max.re - img->min.re) / img->wid);
+			c.im = (img->max.im - j * (img->max.im - img->min.im) / img->hgt);
+			if (z.re < 0 && z.im == 0)
 			{
-				if (i > x && j > y)
-					img->esc_val[j * img->wid + i] = img->esc_val[(j - y) * img->wid + (i - x)];
+				if (i > x)
+					img->esc_val[j * img->wid + i] = img->esc_val[j * img->wid + (i - x)];
 				else
 					img->esc_val[j * img->wid + i] = fractal.get_ev(c, fractal.N_max, 0);
 			}
-			else if (z.re < 0 && z.im < 0)
+			else if (z.re == 0 && z.im > 0)
 			{
-				if (i > x && j < img->hgt - y)
-					img->esc_val[j * img->wid + i] = img->esc_val[(j + y) * img->wid + (i - x)];
+				if (j > y)
+					img->esc_val[j * img->wid + i] = img->esc_val[(j - y) * img->wid + i];
 				else
 					img->esc_val[j * img->wid + i] = fractal.get_ev(c, fractal.N_max, 0);
 			}

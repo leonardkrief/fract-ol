@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 22:59:13 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/03 07:13:24 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/03 08:32:08 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_image	*init_image(void *mlx, int wid, int hgt)
 		free(img);
 		return (NULL);
 	}
-	set_point(&(img->min), -2, -2 * hgt/wid);
-	set_point(&(img->max), 2, 2 * hgt/wid);
+	set_point(&(img->min), -2, -2 * (double)hgt/(double)wid);
+	set_point(&(img->max), 2, 2 * (double)hgt/(double)wid);
 	return (img);
 }
