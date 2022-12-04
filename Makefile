@@ -1,9 +1,11 @@
-SRCS		=	srcs/colors.c \
+SRCS		=	srcs/fractals.c \
+				srcs/free.c \
+				srcs/handle_input.c \
 				srcs/init.c \
 				srcs/main.c \
-				srcs/mandelbrot.c \
-				srcs/display.c \
-				srcs/points.c \
+				srcs/set_fractals.c \
+				srcs/translate.c \
+				srcs/utils.c \
 
 OBJS		= $(SRCS:.c=.o)
 DEPS		= $(SRCS:.c=.d)

@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:08:50 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/04 05:59:27 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/04 05:54:35 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,21 +98,53 @@ typedef struct s_vars {
 	t_fractal fractal;
 }	t_vars;
 
-// fractals.c
-int	mandelbrot(t_point c, t_point param, int N_max, int n);
-int	julia(t_point c, t_point param, int N_max, int n);
+// colors.c
+int	add_shade(double distance, t_color color);
+int	color(int escape_time, int N_max);
 
 // free.c
-int	free_window(t_window *win, int exit_code);
-int	free_image(t_image *img, int exit_code);
-int	free_all(void *mlx, t_window *win, t_image *img, int exit_code);
+int	free_window(t_window *win, int exit);
+int	free_image(t_image *img, int exit);
+int	free_all(void *mlx, t_window *win, t_image *img, int exit);
 
-// handle_input.c
+// init.c
+t_window	*init_window(void *mlx, int wid, int hgt);
+t_image		*init_image(void *mlx, int wid, int hgt);
+int	init_fractal(t_fractal *fractal, int N_max, \
+	int (*f)(t_point, t_point, int, int), t_point param);
+int	init_wo_fractal(t_vars *vars, void **mlx, t_window **win, t_image **img);
+
+//handle_input.c
 int	handle_no_event(void);
 int	handle_key_input(int keysym, t_vars *vars);
 int	handle_mouse_input(int mousesym, int x, int y, t_vars *vars);
 
-// help_n_checks.c
+// mandelbrot.c
+int		mandelbrot(t_point c, t_point param, int N_max, int n);
+int		julia(t_point c, t_point param, int N_max, int n);
+int	set_fractal_ev(t_image *img, t_fractal fractal, int *ev_tab);
+int	fractal_to_img(t_image *img, t_fractal fractal);
+
+// display.c
+int		my_mlx_pixel_put(t_image *img, int x, int y, int color);
+void	zoom_mouse(t_image *img, t_point mouse, double t);
+int		zoom_point(t_image *img, t_point z, double t);
+void	put_grid(t_image *img, int colr);
+
+// points.c
+int	set_point(t_point *z, double re, double im);
+
+//translate.c
+void	translate_img_1(t_image *img, t_point z, t_fractal frct);
+void	translate_img_2(t_image *img, t_point z, t_fractal frct);
+void	translate_img_3(t_image *img, t_point z, t_fractal frct);
+void	translate_img_4(t_image *img, t_point z, t_fractal frct);
+int	translate_img(t_image *img, t_point z, t_fractal frct);
+
+int	ft_putstr_fd(int fd, char *str);
+int	fractol(int	(*f)(t_point, int, int));
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+
 t_args *new_arg(int(*get_ev)(t_point, int, int), t_point param);
 void	append_args(t_args **x, int(*get_ev)(t_point, int, int), t_point param);
 void	free_arg(t_args *arg, int help);
@@ -120,35 +152,5 @@ t_point	get_param(char **av, int i, int p, int boucle);
 t_args	*fractol_check(int ac, char **av);
 void	print_help(void);
 
-// init.c
-t_window	*init_window(void *mlx, int wid, int hgt);
-t_image	*init_image(void *mlx, int wid, int hgt);
-int	init_fractal(t_fractal *fractal, int N_max, \
-	int (*f)(t_point, t_point, int, int), t_point param);
-int	init_wo_fractal(t_vars *vars, void **mlx, t_window **win, t_image **img);
-
-// main.c
-int	fractol(t_args *args);
-int	main(int ac, char **av);
-
-// set_fractals.c
-int	set_fractal_ev(t_image *img, t_fractal fractal, int *ev_tab);
-int	fractal_to_img(t_image *img, t_fractal fractal);
-
-// translate.c
-void	translate_img_1(t_image *img, t_point z, t_fractal fractal);
-void	translate_img_2(t_image *img, t_point z, t_fractal fractal);
-void	translate_img_3(t_image *img, t_point z, t_fractal fractal);
-void	translate_img_4(t_image *img, t_point z, t_fractal fractal);
-int	translate_img(t_image *img, t_point z, t_fractal fractal);
-
-// utils.c
-int	set_point(t_point *z, double re, double im);
-int	my_mlx_pixel_put(t_image *img, int x, int y, int color);
-int	zoom_point(t_image *img, t_point z, double t);
-int	add_shade(double distance, t_color color);
-int	color(int escape_time, int N_max);
-int	ft_putstr_fd(int fd, char *str);
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif
