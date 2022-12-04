@@ -6,13 +6,13 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 23:51:15 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/04 04:10:21 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/04 15:56:01 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
 
-t_args *new_arg(int(*get_ev)(t_point, int, int), t_point param)
+t_args *new_arg(int(*get_ev)(t_point, t_point, int, int), t_point param)
 {
 	t_args	*arg;
 
@@ -22,19 +22,19 @@ t_args *new_arg(int(*get_ev)(t_point, int, int), t_point param)
 	arg->get_ev = get_ev;
 	arg->param = param;
 	arg->next = NULL;
+	return (arg);
 }
 
-void	append_args(t_args **x, int(*get_ev)(t_point, int, int), t_point param)
+void	append_args(t_args **arg, int(*get_ev)(t_point, t_point, int, int), t_point param)
 {
-	t_args	*arg;
-
-	arg = *x;
-	if (arg)
+	if (!(*arg))
+		*arg = new_arg(get_ev, param);
+	else
 	{
-		while (arg->next)
-			arg = arg->next;
+		while ((*arg)->next)
+			(*arg) = (*arg)->next;
+		(*arg)->next = new_arg(get_ev, param);
 	}
-	arg = new_arg(get_ev, param);
 }
 
 void	free_arg(t_args *arg, int help)
@@ -62,7 +62,7 @@ t_point	get_param(char **av, int i, int p, int boucle)
 	{
 		x = 0;
 		signe = 1;
-		while (av[i][p] >= 9 && av[i][p] <= 13 || av[i][p] == ' ')
+		while ((av[i][p] >= 9 && av[i][p] <= 13) || av[i][p] == ' ')
 			p++;
 		signe -= 2 * (av[i][p] == '-');
 		if (av[i][p] == '+' || av[i][p] == '-')
@@ -71,9 +71,12 @@ t_point	get_param(char **av, int i, int p, int boucle)
 			x = 10 * x + av[i][p++] - '0';
 		if (av[i][p] == '.')
 			p++;
-		point = p;
+		point = p - 1;
 		while (av[i][p] >= '0' && av[i][p] <= '9')
-			x += (av[i][p++] - '0') / pow(10, p - point);
+		{
+			x += (av[i][p] - '0') / pow(10, p - point);
+			p++;
+		}
 		param.re += signe * x * (boucle == 1);
 	}
 	param.im = signe * x;
@@ -84,41 +87,47 @@ t_args	*fractol_check(int ac, char **av)
 {
 	int		i;
 	t_args	*args;
+	t_point	param;
 
 	if (ac < 2)
 		print_help();
-	tab = malloc(sizeof(*tab) * ac);
-	if (!tab)
-		return (NULL);
-	tab[ac - 1] = NULL;
-	i = 0;
+	set_point(&param, 0, 0);
 	args = NULL;
+	i = 0;
 	while (++i < ac)
 	{
-		if (ft_strncmp(av[i], "Mandelbrot", 10))
-			append_args(&args, mandelbrot, 0);
-		else if (ft_strncmp(av[i], "Julia", 4))
+		if (!ft_strncmp(av[i], "Mandelbrot", 10))
+			append_args(&args, mandelbrot, param);
+		else if (!ft_strncmp(av[i], "Julia", 5))
 			append_args(&args, julia, get_param(av, i, 5, 0));
 		else
-			free_arg(tab, 1);
+			free_arg(args, 1);
 	}
-	return (tab);
+	return (args);
 }
+
+
 
 void	print_help(void)
 {
-	ft_putstr_fd("./~|~\\. WELCOME TO MY FRACTALS GENERATOR ./~|~\\.\n\n");
-	ft_putstr_fd("Type in ./fract-ol followed by one or several of the");
-	ft_putstr_fd("following fractal\n\n");
-	ft_putstr_fd("Available fractals: Mandelbrot\n");
-	ft_putstr_fd("                    Julia x (where x is a float number)\n\n");
-	ft_putstr_fd("Default values:\n");
-	ft_putstr_fd("HEIGHT = 800, WIDTH = 800, X_START = 0, Y_START = 0\n");
-	ft_putstr_fd("N_MAX = 50, ZOOM = 1\n\n");
-	ft_putstr_fd("Examples : ./fract-ol Mandelbrot\n");
-	ft_putstr_fd("           ./fract-ol Julia\n");
-	ft_putstr_fd("           ./fract-ol Julia 0.454\n\n");
-	ft_putstr_fd("While you're running the program, you can press 'h' for help\n");
-	ft_putstr_fd("./~\\./~\\. ENJOY AND HAVE FUN ./~\\./~\\.\n");
+	ft_putstr("\n");
+	ft_putstr(" ~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~\n");
+	ft_putstr(" ~.~.~.~.~.~.WELCOME TO MY FRACTALS GENERATOR.~.~..~.~.~.~.~\n");
+	ft_putstr(" ~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~");
+	ft_putstr("\n\n ./fract-ol followed by one or several of the ");
+	ft_putstr("following fractal\n\n");
+	ft_putstr(" Available fractals: \"Mandelbrot\"\n");
+	ft_putstr("                     \"Julia x\" (x is a float number)\n\n");
+	// ft_putstr("Default values:\n");
+	// ft_putstr("HEIGHT = 800, WIDTH = 800, X_START = 0, Y_START = 0\n");
+	// ft_putstr("N_MAX = 50, ZOOM = 1\n\n");
+	ft_putstr(" Examples : ./fract-ol Mandelbrot\n");
+	ft_putstr("            ./fract-ol Julia\n");
+	ft_putstr("            ./fract-ol \"Julia 0.454+0.12i\"\n\n");
+	ft_putstr(" While you run the program, you can press 'h' for help\n\n");
+	ft_putstr(" ~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~\n");
+	ft_putstr(" ~.~.~.~.~.~.~.~.~.~.~.~.ENJOY!.~.~.~..~.~.~..~.~..~.~.~.~.~\n");
+	ft_putstr(" ~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~");
+	ft_putstr("\n");
 	exit (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:08:50 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/04 05:59:27 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/04 15:28:42 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_args {
 typedef struct s_vars {
 	void *mlx;
 	void *win;
+	t_window	*window;
 	t_image *img;
 	t_fractal fractal;
 }	t_vars;
@@ -113,8 +114,8 @@ int	handle_key_input(int keysym, t_vars *vars);
 int	handle_mouse_input(int mousesym, int x, int y, t_vars *vars);
 
 // help_n_checks.c
-t_args *new_arg(int(*get_ev)(t_point, int, int), t_point param);
-void	append_args(t_args **x, int(*get_ev)(t_point, int, int), t_point param);
+t_args *new_arg(int(*get_ev)(t_point, t_point, int, int), t_point param);
+void	append_args(t_args **x, int(*get_ev)(t_point, t_point, int, int), t_point param);
 void	free_arg(t_args *arg, int help);
 t_point	get_param(char **av, int i, int p, int boucle);
 t_args	*fractol_check(int ac, char **av);
@@ -129,7 +130,6 @@ int	init_wo_fractal(t_vars *vars, void **mlx, t_window **win, t_image **img);
 
 // main.c
 int	fractol(t_args *args);
-int	main(int ac, char **av);
 
 // set_fractals.c
 int	set_fractal_ev(t_image *img, t_fractal fractal, int *ev_tab);
@@ -149,6 +149,7 @@ int	zoom_point(t_image *img, t_point z, double t);
 int	add_shade(double distance, t_color color);
 int	color(int escape_time, int N_max);
 int	ft_putstr_fd(int fd, char *str);
+int	ft_putstr(char *str);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

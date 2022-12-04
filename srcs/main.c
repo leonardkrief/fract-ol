@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 05:12:05 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/04 04:21:23 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/04 15:30:30 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,19 @@ int	fractol(t_args *args)
 	mlx_put_image_to_window(mlx, win->win, img->img, 0, 0);
 	mlx_key_hook(win->win, &handle_key_input, &vars);
 	mlx_mouse_hook(win->win, &handle_mouse_input, &vars);
+		//free_all(mlx, win, img, 0);
 	mlx_loop(win->mlx);
-	free_all(mlx, win, img, 0);
 	return (0);
 }
 
 int	main(int ac, char **av)
 {
+	t_args *arg;
+
 	if (ac >= 2)
 	{
-		fractol_check(ac, av);
-		fractol(&mandelbrot);
+		arg = fractol_check(ac, av);
+		fractol(arg);
 	}
 	else
 		print_help();

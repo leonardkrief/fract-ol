@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 22:59:13 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/04 04:16:16 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/04 15:29:40 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	init_wo_fractal(t_vars *vars, void **mlx, t_window **win, t_image **img)
 		return(free_all(*mlx, *win, NULL, -1));
 	vars->mlx = *mlx;
 	vars->win = (*win)->win;
+	vars->window = *win;
 	vars->img = *img;
 	return (0);
 }

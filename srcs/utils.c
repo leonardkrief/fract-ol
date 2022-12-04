@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:10:13 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/04 03:21:51 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/04 14:46:05 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,14 @@ int	ft_putstr_fd(int fd, char *str)
 	while (str[len])
 		len++;
 	write(fd, str, len);
+	return (len);
+}
+
+int	ft_putstr(char *str)
+{
+	int	len;
+
+	len = ft_putstr_fd(STDOUT_FILENO, str);
 	return (len);
 }
 

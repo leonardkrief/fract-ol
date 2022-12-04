@@ -1,6 +1,7 @@
 SRCS		=	srcs/fractals.c \
 				srcs/free.c \
 				srcs/handle_input.c \
+				srcs/help_n_checks.c \
 				srcs/init.c \
 				srcs/main.c \
 				srcs/set_fractals.c \
