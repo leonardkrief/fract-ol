@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 05:12:05 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/04 15:30:30 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/05 04:23:52 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	fractol(t_args *args)
 
 int	main(int ac, char **av)
 {
-	t_args *arg;
+	t_args	*arg;
 
 	if (ac >= 2)
 	{

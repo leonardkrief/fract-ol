@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 22:59:13 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/04 15:29:40 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/05 04:22:55 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_image	*init_image(void *mlx, int wid, int hgt)
 
 	img = malloc(sizeof(*img));
 	if (!img)
-		return(NULL);
+		return (NULL);
 	img->mlx = mlx;
 	img->img = mlx_new_image(mlx, wid, hgt);
 	if (img->img == NULL)
@@ -56,15 +56,15 @@ t_image	*init_image(void *mlx, int wid, int hgt)
 		free(img);
 		return (NULL);
 	}
-	set_point(&(img->min), -2, -2 * (double)hgt/(double)wid);
-	set_point(&(img->max), 2, 2 * (double)hgt/(double)wid);
+	set_point(&(img->min), -2, -2 * (double)hgt / (double)wid);
+	set_point(&(img->max), 2, 2 * (double)hgt / (double)wid);
 	return (img);
 }
 
 int	init_fractal(t_fractal *fractal, int N_max, \
 	int (*f)(t_point, t_point, int, int), t_point param)
 {
-	fractal->N_max = N_max;
+	fractal->n_max = N_max;
 	fractal->get_ev = f;
 	fractal->param = param;
 	return (0);
@@ -80,7 +80,7 @@ int	init_wo_fractal(t_vars *vars, void **mlx, t_window **win, t_image **img)
 		return (free_all(*mlx, NULL, NULL, -1));
 	*img = init_image(*mlx, WIDTH, HEIGHT);
 	if (!(*img))
-		return(free_all(*mlx, *win, NULL, -1));
+		return (free_all(*mlx, *win, NULL, -1));
 	vars->mlx = *mlx;
 	vars->win = (*win)->win;
 	vars->window = *win;

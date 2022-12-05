@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 21:31:51 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/04 15:31:54 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/05 04:26:01 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	handle_no_event(void)
 
 int	handle_key_input(int keysym, t_vars *vars)
 {
-	t_point	a;
-	double	d;
-	static int x;
+	t_point		a;
+	double		d;
+	static int	x;
 
-	if (!vars || !(vars->win)  || !(vars->img) || !(vars->fractal.get_ev))
+	if (!vars || !(vars->win) || !(vars->img) || !(vars->fractal.get_ev))
 		return (-1);
 	if (keysym == 53)
 		free_all(vars->mlx, vars->window, vars->img, 1);

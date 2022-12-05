@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 20:50:07 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/04 04:18:38 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/05 04:28:33 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	translate_img_1(t_image *img, t_point z, t_fractal fractal)
 {
-	int	x;
-	int	i;
-	int	j;
-	t_point c;
+	int		x;
+	int		i;
+	int		j;
+	t_point	c;
 
 	x = fabs(z.re) / (img->max.re - img->min.re) * img->wid;
 	set_point(&(img->min), img->min.re + z.re, img->min.im + z.im);
@@ -35,17 +35,17 @@ void	translate_img_1(t_image *img, t_point z, t_fractal fractal)
 					img->esc_val[j * img->wid + (i + x)];
 			else
 				img->esc_val[j * img->wid + i] = \
-					fractal.get_ev(c, fractal.param, fractal.N_max, 0);
+					fractal.get_ev(c, fractal.param, fractal.n_max, 0);
 		}
 	}
 }
 
 void	translate_img_2(t_image *img, t_point z, t_fractal fractal)
 {
-	int	y;
-	int	i;
-	int	j;
-	t_point c;
+	int		y;
+	int		i;
+	int		j;
+	t_point	c;
 
 	y = fabs(z.im) / (img->max.im - img->min.im) * img->hgt;
 	set_point(&(img->min), img->min.re + z.re, img->min.im + z.im);
@@ -63,17 +63,17 @@ void	translate_img_2(t_image *img, t_point z, t_fractal fractal)
 					img->esc_val[(j + y) * img->wid + i];
 			else
 				img->esc_val[j * img->wid + i] = \
-					fractal.get_ev(c, fractal.param, fractal.N_max, 0);
+					fractal.get_ev(c, fractal.param, fractal.n_max, 0);
 		}
 	}
 }
 
 void	translate_img_3(t_image *img, t_point z, t_fractal fractal)
 {
-	int	x;
-	int	i;
-	int	j;
-	t_point c;
+	int		x;
+	int		i;
+	int		j;
+	t_point	c;
 
 	x = fabs(z.re) / (img->max.re - img->min.re) * img->wid;
 	set_point(&(img->min), img->min.re + z.re, img->min.im + z.im);
@@ -91,17 +91,17 @@ void	translate_img_3(t_image *img, t_point z, t_fractal fractal)
 					img->esc_val[j * img->wid + (i - x)];
 			else
 				img->esc_val[j * img->wid + i] = \
-					fractal.get_ev(c, fractal.param, fractal.N_max, 0);
+					fractal.get_ev(c, fractal.param, fractal.n_max, 0);
 		}
 	}
 }
 
 void	translate_img_4(t_image *img, t_point z, t_fractal fractal)
 {
-	int	y;
-	int	i;
-	int	j;
-	t_point c;
+	int		y;
+	int		i;
+	int		j;
+	t_point	c;
 
 	y = fabs(z.im) / (img->max.im - img->min.im) * img->hgt;
 	set_point(&(img->min), img->min.re + z.re, img->min.im + z.im);
@@ -119,7 +119,7 @@ void	translate_img_4(t_image *img, t_point z, t_fractal fractal)
 					img->esc_val[(j - y) * img->wid + i];
 			else
 				img->esc_val[j * img->wid + i] = \
-					fractal.get_ev(c, fractal.param, fractal.N_max, 0);
+					fractal.get_ev(c, fractal.param, fractal.n_max, 0);
 		}
 	}
 }

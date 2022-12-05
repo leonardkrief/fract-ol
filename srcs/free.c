@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 22:32:59 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/04 15:33:06 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/05 04:26:31 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ int	free_image(t_image *img, int exit_code)
 
 int	free_all(void *mlx, t_window *win, t_image *img, int exit_code)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (img)
 		i += free_image(img, exit_code);
 	if (win)
 		i += free_window(win, exit_code);
-	if (mlx)
+	//if (mlx)
 		// mlx_destroy_ptr(mlx);
 	if (exit_code)
 		exit (exit_code);

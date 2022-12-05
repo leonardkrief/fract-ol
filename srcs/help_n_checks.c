@@ -6,13 +6,13 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 23:51:15 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/04 15:56:01 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/05 04:21:52 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
 
-t_args *new_arg(int(*get_ev)(t_point, t_point, int, int), t_point param)
+t_args	*new_arg(int (*get_ev)(t_point, t_point, int, int), t_point param)
 {
 	t_args	*arg;
 
@@ -25,21 +25,21 @@ t_args *new_arg(int(*get_ev)(t_point, t_point, int, int), t_point param)
 	return (arg);
 }
 
-void	append_args(t_args **arg, int(*get_ev)(t_point, t_point, int, int), t_point param)
+void	append_args(t_args **a, int (*g)(t_point, t_point, int, int), t_point p)
 {
-	if (!(*arg))
-		*arg = new_arg(get_ev, param);
+	if (!(*a))
+		*a = new_arg(g, p);
 	else
 	{
-		while ((*arg)->next)
-			(*arg) = (*arg)->next;
-		(*arg)->next = new_arg(get_ev, param);
+		while ((*a)->next)
+			(*a) = (*a)->next;
+		(*a)->next = new_arg(g, p);
 	}
 }
 
 void	free_arg(t_args *arg, int help)
 {
-	t_args *tmp;
+	t_args	*tmp;
 
 	while (arg)
 	{
@@ -100,34 +100,39 @@ t_args	*fractol_check(int ac, char **av)
 			append_args(&args, mandelbrot, param);
 		else if (!ft_strncmp(av[i], "Julia", 5))
 			append_args(&args, julia, get_param(av, i, 5, 0));
+		else if (!ft_strncmp(av[i], "Tricorn", 7))
+			append_args(&args, tricorn, param);
+		else if (!ft_strncmp(av[i], "Lifetree", 8))
+			append_args(&args, lifetree, get_param(av, i, 8, 0));
+		else if (!ft_strncmp(av[i], "Mandeltrig", 10))
+			append_args(&args, mandeltrig, param);
 		else
 			free_arg(args, 1);
 	}
 	return (args);
 }
 
-
-
 void	print_help(void)
 {
 	ft_putstr("\n");
 	ft_putstr(" ~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~\n");
-	ft_putstr(" ~.~.~.~.~.~.WELCOME TO MY FRACTALS GENERATOR.~.~..~.~.~.~.~\n");
+	ft_putstr(" ~.~.~.~.~.~ WELCOME TO MY FRACTALS GENERATOR ~.~..~.~.~.~.~\n");
 	ft_putstr(" ~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~");
-	ft_putstr("\n\n ./fract-ol followed by one or several of the ");
-	ft_putstr("following fractal\n\n");
+	ft_putstr("\n\n Usage : -->  ./fract-ol \"fractal (parameter)\"\n");
+	ft_putstr("         -->  Press 'h' for help while you run the program\n\n");
 	ft_putstr(" Available fractals: \"Mandelbrot\"\n");
-	ft_putstr("                     \"Julia x\" (x is a float number)\n\n");
-	// ft_putstr("Default values:\n");
-	// ft_putstr("HEIGHT = 800, WIDTH = 800, X_START = 0, Y_START = 0\n");
-	// ft_putstr("N_MAX = 50, ZOOM = 1\n\n");
-	ft_putstr(" Examples : ./fract-ol Mandelbrot\n");
-	ft_putstr("            ./fract-ol Julia\n");
-	ft_putstr("            ./fract-ol \"Julia 0.454+0.12i\"\n\n");
-	ft_putstr(" While you run the program, you can press 'h' for help\n\n");
+	ft_putstr("                     \"Julia x\" (x is a complex number)\n");
+	ft_putstr("                     \"Tricorn\"\n");
+	ft_putstr("                     \"Lifetree x\" (x is a complex number)\n");
+	ft_putstr("                     \"Mandeltrig\"\n\n");
+	ft_putstr(" Examples :          ./fract-ol Mandelbrot\n");
+	ft_putstr("                     ./fract-ol Julia\n");
+	ft_putstr("                     ./fract-ol \"Julia 0.312+0.607i\"\n");
+	ft_putstr("                     ./fract-ol \"Lifetree 0.2\"\n");
+	ft_putstr("                     ./fract-ol \"Lifetree 0.3-0.15i\"\n\n");
 	ft_putstr(" ~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~\n");
-	ft_putstr(" ~.~.~.~.~.~.~.~.~.~.~.~.ENJOY!.~.~.~..~.~.~..~.~..~.~.~.~.~\n");
-	ft_putstr(" ~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~");
+	ft_putstr(" ~.~.~.~.~.~.~.~.~.~.~.~.~. ENJOY ! .~.~.~.~..~.~..~.~.~.~.~\n");
+	ft_putstr(" ~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~\n");
 	ft_putstr("\n");
 	exit (0);
 }

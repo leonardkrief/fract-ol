@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:10:13 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/04 14:46:05 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/05 04:23:15 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int	add_shade(double distance, t_color color)
 
 int	color(int escape_time, int N_max)
 {
-	double t;
-	t_color clr;
+	double	t;
+	t_color	clr;
 
 	t = (double)escape_time / (double)N_max;
 	clr.t = 0;

@@ -6,7 +6,7 @@
 /*   By: lkrief <lkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:08:50 by lkrief            #+#    #+#             */
-/*   Updated: 2022/12/04 15:28:42 by lkrief           ###   ########.fr       */
+/*   Updated: 2022/12/05 04:19:29 by lkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,28 +80,32 @@ typedef struct s_image {
 }	t_image;
 
 typedef struct s_fractal {
-	int	N_max;
-	int (*get_ev)(t_point, t_point, int, int);
+	int	n_max;
+	int	(*get_ev)(t_point, t_point, int, int);
 	t_point	param;
 }	t_fractal;
 
 typedef struct s_args {
-	int (*get_ev)(t_point, t_point, int, int);
-	t_point param;
-	struct s_args *next;
-} t_args;
+	int	(*get_ev)(t_point, t_point, int, int);
+	t_point	param;
+	struct s_args	*next;
+}	t_args;
 
 typedef struct s_vars {
-	void *mlx;
-	void *win;
+	void	*mlx;
+	void	*win;
 	t_window	*window;
-	t_image *img;
-	t_fractal fractal;
+	t_image	*img;
+	t_fractal	fractal;
 }	t_vars;
 
 // fractals.c
 int	mandelbrot(t_point c, t_point param, int N_max, int n);
 int	julia(t_point c, t_point param, int N_max, int n);
+int	tricorn(t_point c, t_point param, int N_max, int n);
+int	mandelbox(t_point z, t_point c, int N_max, int n);
+int	lifetree(t_point c, t_point param, int N_max, int n);
+int	mandeltrig(t_point c, t_point param, int N_max, int n);
 
 // free.c
 int	free_window(t_window *win, int exit_code);
@@ -114,8 +118,9 @@ int	handle_key_input(int keysym, t_vars *vars);
 int	handle_mouse_input(int mousesym, int x, int y, t_vars *vars);
 
 // help_n_checks.c
-t_args *new_arg(int(*get_ev)(t_point, t_point, int, int), t_point param);
-void	append_args(t_args **x, int(*get_ev)(t_point, t_point, int, int), t_point param);
+t_args	*new_arg(int (*get_ev)(t_point, t_point, int, int), t_point param);
+void	append_args(t_args **x, int (*get_ev)(t_point, t_point, int, int), \
+	t_point param);
 void	free_arg(t_args *arg, int help);
 t_point	get_param(char **av, int i, int p, int boucle);
 t_args	*fractol_check(int ac, char **av);
